@@ -66,7 +66,7 @@ if (file_exists("contacts.json")) {
           <div class="col-md-4 mx-auto">
             <div class="card card-body text-center">
               <p>No contacts saved yet</p>
-              <a href="./add.php">Add One!</a>
+              <a href="./Add.php">Add One!</a>
             </div>
           </div>
         <?php endif ?>
