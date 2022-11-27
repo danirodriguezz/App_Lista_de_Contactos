@@ -1,7 +1,17 @@
 <?php
   if ($_SERVER["REQUEST_METHOD"] == "POST") {
-      var_dump($_POST);
-      die();
+      $contact = [
+        "name" => $_POST["name"],
+        "phone_number" => $_POST["phone_number"],
+      ];
+
+      $conacts = [];
+
+      $contacts[] = $contact;
+
+      file_put_contents("contacts.json", json_encode($contacts));
+
+      header("Location: index.php");
   }
 ?>
 
