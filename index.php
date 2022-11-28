@@ -1,10 +1,9 @@
 <?php 
 
-if (file_exists("contacts.json")) {
-  $contacts = json_decode(file_get_contents("contacts.json"), true);
-} else {
-  $contacts = [];
-}
+$mysqli = include_once "database.php";
+
+$resultado = $mysqli->query("SELECT * FROM contacts");
+$contacts = $resultado->fetch_all(MYSQLI_ASSOC);
 
 ?>
 
