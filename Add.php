@@ -61,7 +61,7 @@
             <a class="nav-link active" aria-current="page" href="./index.php">Home</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="./Add.html">Add Contact</a>
+            <a class="nav-link" href="./Add.php">Add Contact</a>
           </li>
         </ul>
       </div>
