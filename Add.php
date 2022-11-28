@@ -1,12 +1,24 @@
 <?php
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
-      $mysqli = include_once "database.php";
-      $name = $_POST["name"];
-      $phoneNumber = $_POST["phone_number"];
 
-      $statement = $mysqli->prepare("INSERT INTO contacts (name, phone_number) VALUES ('$name', '$phoneNumber')");
-      $statement->execute();
-      header("Location: index.php");
+    $error = null;
+
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+      if (empty($_POST["name"]) || empty($_POST["phone_number"])) {
+        $error = "Por favor rellena todos los campos";
+      } else if (strlen($_POST["phone_number"]) < 9) {
+        $error = "Introduce un numero de telefono real";
+      } else if (! ctype_digit($_POST["phone_number"])){
+        $error = "Introduce un parametro numerico";
+      } else {
+        $mysqli = include_once "database.php";
+        $name = $_POST["name"];
+        $phoneNumber = $_POST["phone_number"];
+
+        $statement = $mysqli->prepare("INSERT INTO contacts (name, phone_number) VALUES (?, ?)");
+        $statement->bind_param('ss', $name, $phoneNumber);
+        $statement->execute();
+        header("Location: index.php");
+      };
     };
   
 ?>
@@ -67,6 +79,11 @@
           <div class="card">
             <div class="card-header">Add New Contact</div>
             <div class="card-body">
+              <?php if ($error): ?>
+                <p class="text-danger">
+                  <?= $error ?>
+                </p>
+              <?php endif ?>  
               <form method="POST" action="Add.php">
                 <div class="mb-3 row">
                   <label for="name" class="col-md-4 col-form-label text-md-end">Name</label>
