@@ -6,9 +6,11 @@
       if (empty($_POST["name"]) || empty($_POST["phone_number"])) {
         $error = "Por favor rellena todos los campos";
       } else if (strlen($_POST["phone_number"]) < 9) {
-        $error = "Introduce un numero de telefono real";
+        $error = "El número tiene que tener al menos 9 dígitos";
       } else if (! ctype_digit($_POST["phone_number"])){
         $error = "Introduce un parametro numerico";
+      } else if (ctype_digit($_POST["name"])) {
+        $error = "No se damiten solo numeros en el apartado de nombre";
       } else {
         $mysqli = include_once "database.php";
         $name = $_POST["name"];
