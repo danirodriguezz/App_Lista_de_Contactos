@@ -19,7 +19,7 @@
         $statement = $mysqli->prepare("INSERT INTO contacts (name, phone_number) VALUES (?, ?)");
         $statement->bind_param('ss', $name, $phoneNumber);
         $statement->execute();
-        header("Location: index.php");
+        header("Location: home.php");
       };
     };
   

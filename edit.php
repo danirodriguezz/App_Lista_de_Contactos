@@ -33,7 +33,7 @@ $error = null;
     $statement = $mysqli->prepare("UPDATE contacts SET name = ?, phone_number = ? WHERE id = ?");
     $statement->bind_param('ssi', $name, $phoneNumber, $id);
     $statement->execute();
-    header("Location: index.php");
+    header("Location: home.php");
    };
  };
 

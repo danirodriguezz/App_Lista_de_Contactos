@@ -26,7 +26,7 @@ if (!$contact) {
 $statement = $mysqli->prepare("DELETE FROM contacts WHERE id = (?) ");
 $statement->bind_param('i', $id);
 $statement->execute();
-header("Location: index.php");
+header("Location: home.php");
 
 
 

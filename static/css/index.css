@@ -1,5 +1,10 @@
 nav img {
     margin-left: 5px;
 }
+.welcome {
+    background: url(/Curso_web_PHP/static/img/background.jpg);
+    background-position: center center;
+    background-size: cover;
+}
 
 
