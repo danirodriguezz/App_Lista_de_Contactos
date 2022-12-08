@@ -1,10 +1,9 @@
 <?php
 
 $error = null;
-// procesamos la peticion del usuario
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-  // verificamos que los campos estan rellenos
-  if (empty($_POST["name"]) || empty($_POST["email"]) || empty($_POST["password"])) {
+  if (empty($_POST["email"]) || empty($_POST["password"])) {
     $error = "Por favor rellena todos los campos";
   } else {
     $mysqli = include_once "database.php";
@@ -21,24 +20,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $num = $statement->num_rows;
     $statement->close();
 
-    if ($num > 0) {
-      $error = "This email is taken";
+    if ($num == 0) {
+      $error = "This email doesn't exist";
     } else {
-      $statement = $mysqli->prepare("INSERT INTO users (name, email, password) VALUES (?, ?, ?)");
-      $statement->bind_param("sss", $name, $email, $password);
-      $statement->execute();
-
       $statement = $mysqli->prepare("SELECT email, password FROM users WHERE email = ? LIMIT 1");
       $statement->bind_param("s", $email);
       $statement->execute();
       $result = $statement->get_result();
       $user = $result->fetch_assoc();
 
-      session_start();
-      unset($user["password"]); 
-      $_SESSION["user"] = $user;
+      if (!password_verify($_POST["password"], $user["password"])) {
+        $error = "Invalid credentials";
+      } else {
+        session_start();
 
-      header("Location: home.php");
+        unset($user["password"]); 
+        $_SESSION["user"] = $user;
+
+        header("Location: home.php");
+      }
+      // $row = $statement->fetch_array(MYSQLI_ASSOC);
     }
   }
 };
@@ -57,14 +58,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
               <?= $error ?>
             </p>
           <?php endif ?>  
-          <form method="POST" action="register.php">
-            <div class="mb-3 row">
-              <label for="name" class="col-md-4 col-form-label text-md-end">Name</label>
-
-              <div class="col-md-6">
-                <input id="name" type="text" class="form-control" name="name" required autocomplete="name" autofocus>
-              </div>
-            </div>
+          <form method="POST" action="login.php">
 
             <div class="mb-3 row">
               <label for="email" class="col-md-4 col-form-label text-md-end">Email</label>

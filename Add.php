@@ -1,28 +1,34 @@
 <?php
+session_start();
 
-    $error = null;
+if (!isset($_SESSION["user"])) {
+  header("Location: login.php");
+  return;
+}
 
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
-      if (empty($_POST["name"]) || empty($_POST["phone_number"])) {
-        $error = "Por favor rellena todos los campos";
-      } else if (strlen($_POST["phone_number"]) < 9) {
-        $error = "El número tiene que tener al menos 9 dígitos";
-      } else if (! ctype_digit($_POST["phone_number"])){
-        $error = "Introduce un parametro numerico";
-      } else if (ctype_digit($_POST["name"])) {
-        $error = "No se damiten solo numeros en el apartado de nombre";
-      } else {
-        $mysqli = include_once "database.php";
-        $name = $_POST["name"];
-        $phoneNumber = $_POST["phone_number"];
+$error = null;
 
-        $statement = $mysqli->prepare("INSERT INTO contacts (name, phone_number) VALUES (?, ?)");
-        $statement->bind_param('ss', $name, $phoneNumber);
-        $statement->execute();
-        header("Location: home.php");
-      };
-    };
-  
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+  if (empty($_POST["name"]) || empty($_POST["phone_number"])) {
+    $error = "Por favor rellena todos los campos";
+  } else if (strlen($_POST["phone_number"]) < 9) {
+    $error = "El número tiene que tener al menos 9 dígitos";
+  } else if (! ctype_digit($_POST["phone_number"])){
+    $error = "Introduce un parametro numerico";
+  } else if (ctype_digit($_POST["name"])) {
+    $error = "No se damiten solo numeros en el apartado de nombre";
+  } else {
+    $mysqli = include_once "database.php";
+    $name = $_POST["name"];
+    $phoneNumber = $_POST["phone_number"];
+
+    $statement = $mysqli->prepare("INSERT INTO contacts (name, phone_number) VALUES (?, ?)");
+    $statement->bind_param('ss', $name, $phoneNumber);
+    $statement->execute();
+    header("Location: home.php");
+  };
+};
+
 ?>
 
 <?php require "partials/header.php" ?> 

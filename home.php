@@ -2,6 +2,13 @@
 
 $mysqli = include_once "database.php";
 
+session_start();
+
+if (!isset($_SESSION["user"])) {
+  header("Location: login.php");
+  return;
+}
+
 $resultado = $mysqli->query("SELECT * FROM contacts");
 $contacts = $resultado->fetch_all(MYSQLI_ASSOC);
 
