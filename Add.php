@@ -25,6 +25,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $statement = $mysqli->prepare("INSERT INTO contacts (user_id, name, phone_number) VALUES ({$_SESSION['user']['id']}, ?, ?)");
     $statement->bind_param('ss', $name, $phoneNumber);
     $statement->execute();
+
+    $_SESSION["flash"] = ["message" => "Contact {$_POST['name']} added."];
+    $_SESSION["alredy_refreshed"] = NULL;
+
     header("Location: home.php");
   };
 };

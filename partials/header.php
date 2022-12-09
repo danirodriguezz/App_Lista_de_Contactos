@@ -32,6 +32,13 @@
 
 <?php require "partials/navbar.php" ?>
 
+<?php if (isset($_SESSION["flash"])): ?>
+  <div class="alert alert-success" role="alert">
+  <?= $_SESSION["flash"]["message"] ?>
+  </div>
+<?php endif ?>
+
+
 <main>
 
 <!-- Content hear -->

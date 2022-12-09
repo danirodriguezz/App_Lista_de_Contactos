@@ -1,5 +1,5 @@
 <?php 
-
+$ActualizarDespuesDe = 5;
 $mysqli = include_once "database.php";
 
 session_start();
@@ -16,6 +16,8 @@ $contacts = $resultado->fetch_all(MYSQLI_ASSOC);
 
 
 <?php require "partials/header.php" ?>
+
+<?php unset($_SESSION["flash"]) ?>
     
 <div class="container pt-4 p3">
   <div class="row">
@@ -44,3 +46,14 @@ $contacts = $resultado->fetch_all(MYSQLI_ASSOC);
 </div>
 
 <?php require "partials/footer.php" ?>
+
+<?php
+if (!isset($_SESSION["alredy_refreshed"])){
+  header('Refresh: '.$ActualizarDespuesDe);
+  $_SESSION["alredy_refreshed"] = true;
+}
+
+?>
+
+
+

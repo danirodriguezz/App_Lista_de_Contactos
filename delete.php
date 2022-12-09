@@ -37,6 +37,8 @@ if (!$contact) {
   $statement = $mysqli->prepare("DELETE FROM contacts WHERE id = (?) ");
   $statement->bind_param('i', $id);
   $statement->execute();
+  $_SESSION["flash"] = ["message" => "Contact {$contact["name"]}  was deleted."];
+  $_SESSION["alredy_refreshed"] = NULL;
   header("Location: home.php");
  }
 

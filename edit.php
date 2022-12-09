@@ -45,6 +45,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $statement = $mysqli->prepare("UPDATE contacts SET name = ?, phone_number = ? WHERE id = ?");
   $statement->bind_param('ssi', $name, $phoneNumber, $id);
   $statement->execute();
+
+  $_SESSION["flash"] = ["message" => "Contact {$_POST['name']}  was edit."];
+  $_SESSION["alredy_refreshed"] = NULL;
+
   header("Location: home.php");
   };
 };
