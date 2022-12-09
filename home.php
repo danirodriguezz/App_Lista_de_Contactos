@@ -9,7 +9,7 @@ if (!isset($_SESSION["user"])) {
   return;
 }
 
-$resultado = $mysqli->query("SELECT * FROM contacts");
+$resultado = $mysqli->query("SELECT * FROM contacts WHERE user_id = {$_SESSION['user']['id']}");
 $contacts = $resultado->fetch_all(MYSQLI_ASSOC);
 
 ?>

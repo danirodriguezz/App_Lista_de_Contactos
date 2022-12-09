@@ -28,7 +28,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       $statement->bind_param("sss", $name, $email, $password);
       $statement->execute();
 
-      $statement = $mysqli->prepare("SELECT email, password FROM users WHERE email = ? LIMIT 1");
+      $statement = $mysqli->prepare("SELECT * FROM users WHERE email = ? LIMIT 1");
       $statement->bind_param("s", $email);
       $statement->execute();
       $result = $statement->get_result();

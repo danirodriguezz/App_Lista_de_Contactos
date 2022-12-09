@@ -16,11 +16,12 @@ create table users (
 create table contacts (
     id int auto_increment primary key,
     name varchar(255),
-    phone_number varchar(255)
+    user_id INT NOT NULL,
+    phone_number varchar(255),
+
+    FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
-insert into contacts (name, phone_number) values ("Pepe", "1231232312");
 
-insert into users (name, email, password) values ("test", "test@gmail.com", "1234");
 
 

@@ -22,7 +22,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $name = $_POST["name"];
     $phoneNumber = $_POST["phone_number"];
 
-    $statement = $mysqli->prepare("INSERT INTO contacts (name, phone_number) VALUES (?, ?)");
+    $statement = $mysqli->prepare("INSERT INTO contacts (user_id, name, phone_number) VALUES ({$_SESSION['user']['id']}, ?, ?)");
     $statement->bind_param('ss', $name, $phoneNumber);
     $statement->execute();
     header("Location: home.php");

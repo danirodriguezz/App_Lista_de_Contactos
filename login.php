@@ -10,7 +10,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $name = $_POST["name"];
     $email = $_POST["email"];
     $password = password_hash($_POST["password"], PASSWORD_BCRYPT);
-
+    
     $statement = $mysqli->prepare("SELECT * FROM users WHERE email = ? LIMIT 1");
     $statement->bind_param("s", $email);
 
@@ -23,7 +23,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($num == 0) {
       $error = "This email doesn't exist";
     } else {
-      $statement = $mysqli->prepare("SELECT email, password FROM users WHERE email = ? LIMIT 1");
+      $statement = $mysqli->prepare("SELECT * FROM users WHERE email = ? LIMIT 1");
       $statement->bind_param("s", $email);
       $statement->execute();
       $result = $statement->get_result();
@@ -34,12 +34,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       } else {
         session_start();
 
-        unset($user["password"]); 
+        unset($user["password"]);
         $_SESSION["user"] = $user;
 
         header("Location: home.php");
       }
-      // $row = $statement->fetch_array(MYSQLI_ASSOC);
     }
   }
 };
@@ -51,7 +50,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   <div class="row justify-content-center">
     <div class="col-md-8">
       <div class="card">
-        <div class="card-header">Register</div>
+        <div class="card-header">Login</div>
         <div class="card-body">
           <?php if ($error): ?>
             <p class="text-danger">
