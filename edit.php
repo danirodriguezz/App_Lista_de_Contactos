@@ -20,28 +20,34 @@ if (!$contact) {
     echo("HTTP 404 NOT FOUND");
     return;
   }
+  
+if ($contact["user_id"] !== $_SESSION["user"]["id"]) {
+  http_response_code(403);
+  echo ("HTTP 403 UNAUTHORIZED");
+  return;
+}
 
 $error = null;
 
-  if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    if (empty($_POST["name"]) || empty($_POST["phone_number"])) {
-      $error = "Por favor rellena todos los campos";
-    } else if (strlen($_POST["phone_number"]) < 9) {
-      $error = "El número tiene que tener al menos 9 dígitos";
-    } else if (! ctype_digit($_POST["phone_number"])){
-      $error = "Introduce un parametro numerico";
-    } else if (ctype_digit($_POST["name"])) {
-      $error = "No se damiten solo numeros en el apartado de nombre";
-  } else {
-    $name = $_POST["name"];
-    $phoneNumber = $_POST["phone_number"];
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+  if (empty($_POST["name"]) || empty($_POST["phone_number"])) {
+    $error = "Por favor rellena todos los campos";
+  } else if (strlen($_POST["phone_number"]) < 9) {
+    $error = "El número tiene que tener al menos 9 dígitos";
+  } else if (! ctype_digit($_POST["phone_number"])){
+    $error = "Introduce un parametro numerico";
+  } else if (ctype_digit($_POST["name"])) {
+    $error = "No se damiten solo numeros en el apartado de nombre";
+} else {
+  $name = $_POST["name"];
+  $phoneNumber = $_POST["phone_number"];
 
-    $statement = $mysqli->prepare("UPDATE contacts SET name = ?, phone_number = ? WHERE id = ?");
-    $statement->bind_param('ssi', $name, $phoneNumber, $id);
-    $statement->execute();
-    header("Location: home.php");
-   };
- };
+  $statement = $mysqli->prepare("UPDATE contacts SET name = ?, phone_number = ? WHERE id = ?");
+  $statement->bind_param('ssi', $name, $phoneNumber, $id);
+  $statement->execute();
+  header("Location: home.php");
+  };
+};
 
 ?>
 
