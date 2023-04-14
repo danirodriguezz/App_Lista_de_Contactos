@@ -22,7 +22,7 @@
   <!-- Static content  -->
   <link rel="stylesheet" href="./static/css/index.css"/>
   <?php $uri = parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH) ?>
-  <?php if ($uri == '/Curso_web_PHP/' || $uri == '/Curso_web_PHP/index.php'): ?>
+  <?php if ($uri == '/App_Lista_de_Contactos/' || $uri == '/App_Lista_de_Contactos/index.php'): ?>
       <script defer src="./static/js/welcome.js"></script>
   <?php endif ?>
 

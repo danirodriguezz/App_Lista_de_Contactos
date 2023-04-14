@@ -8,7 +8,7 @@ nav img {
     margin-top: 5px;
 }
 .welcome {
-    background: url(/Curso_web_PHP/static/img/background.jpg);
+    background: url(/App_Lista_de_Contactos/static/img/background.jpg);
     background-position: center center;
     background-size: cover;
 }
